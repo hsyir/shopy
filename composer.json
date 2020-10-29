@@ -11,7 +11,9 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=7.0",
-        "spatie/laravel-medialibrary": "^8.0.0"
+        "spatie/laravel-medialibrary": "^8.0.0",
+        "spatie/laravel-translatable": "9999999-dev",
+        "spatie/laravel-sluggable": "9999999-dev"
     },
     "extra": {
         "laravel": {
@@ -29,7 +31,8 @@
         }
     },
     "require-dev": {
-        "orchestra/testbench": "9999999-dev"
+        "orchestra/testbench": "9999999-dev",
+        "laravel/legacy-factories": "^1.0.4"
     },
     "autoload-dev": {
         "psr-4": {
