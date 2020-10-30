@@ -9,5 +9,6 @@ $factory->define(Product::class, function (Faker\Generator $faker) {
         'slug' => \Illuminate\Support\Str::slug($faker->sentence),
         'body' => $faker->sentence,
         'category_id' => 1,
+        'price' => $faker->randomNumber(),
     ];
 });

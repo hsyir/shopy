@@ -10,10 +10,13 @@
     "license": "MIT",
     "minimum-stability": "dev",
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.4",
+        "illuminate/support": "^8.0.0",
+        "laravel/laravel": "^8.0.0",
         "spatie/laravel-medialibrary": "^8.0.0",
-        "spatie/laravel-translatable": "9999999-dev",
-        "spatie/laravel-sluggable": "9999999-dev"
+        "spatie/laravel-translatable": "4.5.*",
+        "spatie/laravel-sluggable": "9999999-dev",
+        "spatie/laravel-tags": "9999999-dev"
     },
     "extra": {
         "laravel": {

@@ -18,6 +18,9 @@ class CreateProductsTable extends Migration
             $table->json("title");
             $table->json("body");
             $table->string("slug");
+            $table->bigInteger("price");
+            $table->string("unit")->nullable();
+            $table->bigInteger("weight")->nullable();
             $table->unsignedInteger("category_id");
             $table->timestamps();
         });
