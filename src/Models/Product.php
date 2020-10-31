@@ -30,5 +30,12 @@ class Product extends Model implements HasMedia
     }
 
     private array $translatable = ["title", "body"];
+
     protected $fillable = ["title","slug","body","price","weight","category_id"];
+
+    public function getTags()
+    {
+        return $this->tags->pluck("name")->toArray();
+    }
+
 }

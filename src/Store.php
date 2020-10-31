@@ -16,6 +16,6 @@ class Store
 
     public function products()
     {
-        return $this->products;
+        return $this->products->reset();
     }
 }

@@ -4,6 +4,7 @@ namespace Hsy\Store\Tests;
 
 use Hsy\Store\HsyStoreServiceProvider;
 use PDO;
+use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -27,6 +28,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     {
         return [
             HsyStoreServiceProvider::class,
+            MediaLibraryServiceProvider::class,
         ];
     }
 
