@@ -12,8 +12,8 @@ class Products
 {
     private $query;
 
-    private $perPage = 100;
     private array $with = [];
+    private array $withCount = [];
 
     public function __construct()
     {
@@ -21,8 +21,8 @@ class Products
     }
 
     public function reset(){
-        $this->perPage = 100;
         $this->with = [];
+        $this->withCount= [];
         $this->query = Product::query();
         return $this;
     }
@@ -42,7 +42,7 @@ class Products
         if (isset($data["tags"]) and is_array($data["tags"]))
             $product->attachTags($data["tags"]);
 
-        if (isset($data["cover_image"]))
+        if (request()->hasFile("cover_image"))
             $product->addMediaFromRequest("cover_image")->toMediaCollection("cover_image");
 
         return $product;
@@ -83,30 +83,48 @@ class Products
     public function get()
     {
         $query = $this->query();
-        return ($this->perPage === false) ? $query->get() : $query->paginate($this->perPage);
+        return  $query->get();
     }
 
     /**
-     * @param $count
-     * @return $this
+     * @param null $term
+     * @param null $category_id
+     * @param null $tags
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function perPage($count): Products
+    public function paginate($count)
     {
-        $this->perPage = $count;
-        return $this;
+        $query = $this->query();
+        return $query->paginate($count);
     }
 
-    /**
-     * @return $this
-     */
-    public function withoutPagination(): Products
+    public function with($relations)
     {
-        $this->perPage = false;
+        if(is_array($relations))
+        {
+            array_merge($this->with,$relations);
+            return $this;
+        }
+
+        $this->with[]=$relations;
         return $this;
+
     }
 
+    public function withCount($relations)
+    {
+        if(is_array($relations))
+        {
+            array_merge($this->withCount,$relations);
+            return $this;
+        }
 
-    public function withMedias()
+        $this->withCount[]=$relations;
+        return $this;
+
+    }
+
+    public function withMedia()
     {
         $this->with[] = "media";
         return $this;

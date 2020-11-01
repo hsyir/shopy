@@ -19,9 +19,12 @@ class CreateProductsTable extends Migration
             $table->json("body");
             $table->string("slug");
             $table->bigInteger("price");
+            $table->bigInteger("no_discount_price")->nullable();
             $table->string("unit")->nullable();
             $table->bigInteger("weight")->nullable();
             $table->unsignedInteger("category_id");
+            $table->unsignedInteger("user_id")->nullable();
+            $table->text("extra_data")->nullable();
             $table->timestamps();
         });
     }
