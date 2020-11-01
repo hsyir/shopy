@@ -19,6 +19,18 @@ class productRepositoryTest extends TestCase
         $this->defineRouter();
     }
 
+    private function defineRouter()
+    {
+        $this->app['router']->prefix("products")->group(function ($router) {
+
+            $router->post('/', function (Request $request) {
+                $product = Store::products()->store($request->all());
+                return response()->json(["product_id" => $product->id]);
+            });
+
+        });
+    }
+
     public function testCreateProduct()
     {
         $this->withoutExceptionHandling();
@@ -59,25 +71,12 @@ class productRepositoryTest extends TestCase
         $this->assertEquals(Product::all()->first()->title, $newTitle);
     }
 
-    private function defineRouter()
-    {
-        $this->app['router']->prefix("products")->group(function ($router) {
-
-            $router->post('/', function (Request $request) {
-                $product = Store::products()->store($request->all());
-                return response()->json(["product_id" => $product->id]);
-            });
-
-        });
-    }
-
-
     public function testFilter()
     {
         $data = [
             [
                 "title" => "Product-1",
-                "body" => "there is some description about my product as Samsung Mobile Phone",
+                "body" => "there is some description about my product as Samsung TV",
                 "category_id" => 1,
                 "price" => 100000,
                 "tags" => ["tag-1", "tag-2", "tag-3"]
@@ -96,7 +95,20 @@ class productRepositoryTest extends TestCase
                 "price" => 300000,
                 "tags" => ["tag-5", "tag-6", "tag-7"]
             ],
-
+            [
+                "title" => "Product-4",
+                "body" => "there is some description about my product as Honor Mobile Phone",
+                "category_id" => 2,
+                "price" => 500000,
+                "tags" => ["tag-8", "tag-9", "tag-10"]
+            ],
+            [
+                "title" => "Product-5",
+                "body" => "there is some description about my product as Sony TV",
+                "category_id" => 2,
+                "price" => 600000,
+                "tags" => ["tag-1", "tag-2", "tag-11"]
+            ],
         ];
 
         foreach ($data as $productData) {
@@ -109,15 +121,53 @@ class productRepositoryTest extends TestCase
 
         $products = Store::products()->withoutPagination()
             ->hasAnyTags(["tag-1"])->get();
-        $this->assertCount(1, $products);
+        $this->assertCount(2, $products);
 
         $products = Store::products()->withoutPagination()
             ->hasAnyTags(["tag-1","tag-2"])->get();
-        $this->assertCount(2, $products);
-        
+        $this->assertCount(3, $products);
+
         $products = Store::products()->withoutPagination()
             ->hasAllTags(["tag-1","tag-2"])->get();
+        $this->assertCount(2, $products);
+
+        $products = Store::products()->withoutPagination()
+            ->priceEqual(300000)->get();
         $this->assertCount(1, $products);
+
+        $products = Store::products()->withoutPagination()
+            ->priceGreaterThan(350000)->get();
+        $this->assertCount(2, $products);
+
+        $products = Store::products()->withoutPagination()
+            ->priceLessThan(300000)
+            ->hasAllTags(["tag-2","tag-1"])
+            ->get();
+        $this->assertCount(1, $products);
+
+        $products = Store::products()->withoutPagination()
+            ->priceLessThan(300000)
+            ->hasAllTags(["tag-2","tag-1"])
+            ->filter("honor")
+            ->get();
+        $this->assertCount(0, $products);
+
+        $products = Store::products()->withoutPagination()
+            ->priceLessThan(300000)
+            ->hasAllTags(["tag-2","tag-1"])
+            ->filter("honor")
+            ->get();
+        $this->assertCount(0, $products);
+
+        $products = Store::products()->withoutPagination()
+            ->filter("TV")
+            ->get();
+        $this->assertCount(2, $products);
+
+        $products = Store::products()->withoutPagination()
+            ->filter("product")
+            ->get();
+        $this->assertCount(5, $products);
 
     }
 
