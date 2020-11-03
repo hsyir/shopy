@@ -1,9 +1,6 @@
 <?php
 
-
 namespace Hsy\Store;
-
-
 
 use Illuminate\Support\ServiceProvider;
 
@@ -16,7 +13,6 @@ class HsyStoreServiceProvider extends ServiceProvider
 
     public function register()
     {
-
     }
 
     /**
@@ -30,7 +26,6 @@ class HsyStoreServiceProvider extends ServiceProvider
             return new StoreManager();
         });
 
-        $this->mergeConfigFrom(__DIR__ . '/../config/store.php', 'store');
+        $this->mergeConfigFrom(__DIR__.'/../config/store.php', 'store');
     }
-
 }

@@ -20,21 +20,18 @@ class Product extends Model implements HasMedia, Buyable
     use HasTags;
     use InteractsWithMedia;
 
+    private array $translatable = ['name', 'description'];
 
-
-    private array $translatable = ["name", "description"];
-
-    protected $fillable = ["name", "slug", "description", "price", "weight", "category_id", "extra_data"];
+    protected $fillable = ['name', 'slug', 'description', 'price', 'weight', 'category_id', 'extra_data'];
 
     public function getTags()
     {
-        return $this->tags->pluck("name")->toArray();
+        return $this->tags->pluck('name')->toArray();
     }
 
     protected $casts = [
-        "extra_data" => "array"
+        'extra_data' => 'array',
     ];
-
 
     public function getBuyableIdentifier($options = null)
     {
@@ -70,8 +67,8 @@ class Product extends Model implements HasMedia, Buyable
     {
         return [
             'slug' => [
-                'source' => 'name'
-            ]
+                'source' => 'name',
+            ],
         ];
     }
 }

@@ -2,14 +2,11 @@
 
 namespace Hsy\Store\Tests;
 
-
+use Hsy\Store\Facades\Store;
 use Hsy\Store\Models\Invoice;
 use Hsy\Store\Models\InvoiceItem;
 use Hsy\Store\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Hsy\Store\Facades\Store;
-use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 
 class InvoicesTest extends TestCase
 {
@@ -44,12 +41,11 @@ class InvoicesTest extends TestCase
         $product->addToCart();
 
         $extraData = [
-            "customer_name" => $faker->name,
-            "customer_email" => $faker->email,
-            "customer_address" => $faker->address,
+            'customer_name'    => $faker->name,
+            'customer_email'   => $faker->email,
+            'customer_address' => $faker->address,
         ];
         $invoiceFromCart = Store::cart()->toInvoice($extraData);
         $this->assertEquals($extraData, Invoice::first()->extra_data);
     }
-
 }

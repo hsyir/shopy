@@ -2,10 +2,9 @@
 
 namespace Hsy\Store\Tests;
 
-
+use Hsy\Store\Facades\Store;
 use Hsy\Store\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Hsy\Store\Facades\Store;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
@@ -21,13 +20,12 @@ class productRepositoryTest extends TestCase
 
     private function defineRouter()
     {
-        $this->app['router']->prefix("products")->group(function ($router) {
-
+        $this->app['router']->prefix('products')->group(function ($router) {
             $router->post('/', function (Request $request) {
                 $product = Store::products()->store($request->all());
-                return response()->json(["product_id" => $product->id]);
-            });
 
+                return response()->json(['product_id' => $product->id]);
+            });
         });
     }
 
@@ -36,34 +34,34 @@ class productRepositoryTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $tags = ["foo one", "bar two"];
-        $file = UploadedFile::fake()->image("image")->size(100);
+        $tags = ['foo one', 'bar two'];
+        $file = UploadedFile::fake()->image('image')->size(100);
 
         $data = [
-            "name" => "new Product",
-            "description" => "test description",
-            "category_id" => 1,
-            "price" => 100000,
-            "tags" => $tags,
-            "cover_image" => $file,
-            'extra_data' => [
-                "key1" => "65",
-                "key2" => "Value 1",
-                "key3" => "Value 2",
+            'name'        => 'new Product',
+            'description' => 'test description',
+            'category_id' => 1,
+            'price'       => 100000,
+            'tags'        => $tags,
+            'cover_image' => $file,
+            'extra_data'  => [
+                'key1' => '65',
+                'key2' => 'Value 1',
+                'key3' => 'Value 2',
             ],
         ];
 
         $product_id =
-            $this->post("/products", $data)
-                ->json("product_id");
+            $this->post('/products', $data)
+                ->json('product_id');
 
         /**
          * @var Product $product
          */
         $product = Product::find($product_id);
-        $this->assertDatabaseCount("products", 1);
+        $this->assertDatabaseCount('products', 1);
         $this->assertEquals($product->getTags(), $tags);
-        $this->assertCount(1, $product->getMedia("cover_image"));
+        $this->assertCount(1, $product->getMedia('cover_image'));
     }
 
     /** @test */
@@ -71,73 +69,74 @@ class productRepositoryTest extends TestCase
     {
         $product = factory(Product::class)->create();
 
-        $newTitle = "New Title ...";
-        Store::products()->store(["name" => $newTitle], $product);
+        $newTitle = 'New Title ...';
+        Store::products()->store(['name' => $newTitle], $product);
 
         $this->assertEquals(Product::all()->first()->name, $newTitle);
     }
+
     /** @test */
     public function filter()
     {
         $data = [
             [
-                "name" => "Product-1",
-                "description" => "there is some description about my product as Samsung TV",
-                "category_id" => 1,
-                "price" => 100000,
-                "tags" => ["tag-1", "tag-2", "tag-3"],
-                'extra_data' => [
-                    "key1" => "65",
-                    "key2" => "Value 1",
-                    "key3" => "Value 2",
+                'name'        => 'Product-1',
+                'description' => 'there is some description about my product as Samsung TV',
+                'category_id' => 1,
+                'price'       => 100000,
+                'tags'        => ['tag-1', 'tag-2', 'tag-3'],
+                'extra_data'  => [
+                    'key1' => '65',
+                    'key2' => 'Value 1',
+                    'key3' => 'Value 2',
                 ],
             ],
             [
-                "name" => "Product-2",
-                "description" => "there is some description about my product as Apple Mobile Phone",
-                "category_id" => 2,
-                "price" => 200000,
-                "tags" => ["tag-2", "tag-3", "tag-4"],
-                'extra_data' => [
-                    "key1" => "65",
-                    "key2" => "Value 1",
-                    "key3" => "Value 2",
+                'name'        => 'Product-2',
+                'description' => 'there is some description about my product as Apple Mobile Phone',
+                'category_id' => 2,
+                'price'       => 200000,
+                'tags'        => ['tag-2', 'tag-3', 'tag-4'],
+                'extra_data'  => [
+                    'key1' => '65',
+                    'key2' => 'Value 1',
+                    'key3' => 'Value 2',
                 ],
             ],
             [
-                "name" => "Product-3",
-                "description" => "there is some description about my product as Nokia Mobile Phone",
-                "category_id" => 2,
-                "price" => 300000,
-                "tags" => ["tag-5", "tag-6", "tag-7"],
-                'extra_data' => [
-                    "key1" => "65",
-                    "key2" => "Value 1",
-                    "key3" => "Value 2",
+                'name'        => 'Product-3',
+                'description' => 'there is some description about my product as Nokia Mobile Phone',
+                'category_id' => 2,
+                'price'       => 300000,
+                'tags'        => ['tag-5', 'tag-6', 'tag-7'],
+                'extra_data'  => [
+                    'key1' => '65',
+                    'key2' => 'Value 1',
+                    'key3' => 'Value 2',
                 ],
             ],
             [
-                "name" => "Product-4",
-                "description" => "there is some description about my product as Honor Mobile Phone",
-                "category_id" => 2,
-                "price" => 500000,
-                "tags" => ["tag-8", "tag-9", "tag-10"],
-                'extra_data' => [
-                    "key1" => "65",
-                    "key2" => "Value 1",
-                    "key3" => "Value 2",
+                'name'        => 'Product-4',
+                'description' => 'there is some description about my product as Honor Mobile Phone',
+                'category_id' => 2,
+                'price'       => 500000,
+                'tags'        => ['tag-8', 'tag-9', 'tag-10'],
+                'extra_data'  => [
+                    'key1' => '65',
+                    'key2' => 'Value 1',
+                    'key3' => 'Value 2',
                 ],
             ],
             [
-                "name" => "Product-5",
-                "description" => "there is some description about my product as Sony TV",
-                "category_id" => 2,
-                "price" => 600000,
-                "tags" => ["tag-1", "tag-2", "tag-11"],
-                'extra_data' => [
-                    "key1" => "65",
-                    "key2" => "Value 1",
-                    "key3" => "Value 2",
+                'name'        => 'Product-5',
+                'description' => 'there is some description about my product as Sony TV',
+                'category_id' => 2,
+                'price'       => 600000,
+                'tags'        => ['tag-1', 'tag-2', 'tag-11'],
+                'extra_data'  => [
+                    'key1' => '65',
+                    'key2' => 'Value 1',
+                    'key3' => 'Value 2',
                 ],
             ],
         ];
@@ -147,19 +146,19 @@ class productRepositoryTest extends TestCase
         }
 
         $products = Store::products()
-            ->filter("samsung")->get();
+            ->filter('samsung')->get();
         $this->assertCount(1, $products);
 
         $products = Store::products()
-            ->hasAnyTags(["tag-1"])->get();
+            ->hasAnyTags(['tag-1'])->get();
         $this->assertCount(2, $products);
 
         $products = Store::products()
-            ->hasAnyTags(["tag-1", "tag-2"])->get();
+            ->hasAnyTags(['tag-1', 'tag-2'])->get();
         $this->assertCount(3, $products);
 
         $products = Store::products()
-            ->hasAllTags(["tag-1", "tag-2"])->get();
+            ->hasAllTags(['tag-1', 'tag-2'])->get();
         $this->assertCount(2, $products);
 
         $products = Store::products()
@@ -172,34 +171,32 @@ class productRepositoryTest extends TestCase
 
         $products = Store::products()
             ->priceLessThan(300000)
-            ->hasAllTags(["tag-2", "tag-1"])
+            ->hasAllTags(['tag-2', 'tag-1'])
             ->get();
         $this->assertCount(1, $products);
 
         $products = Store::products()
             ->priceLessThan(300000)
-            ->hasAllTags(["tag-2", "tag-1"])
-            ->filter("honor")
+            ->hasAllTags(['tag-2', 'tag-1'])
+            ->filter('honor')
             ->get();
         $this->assertCount(0, $products);
 
         $products = Store::products()
             ->priceLessThan(300000)
-            ->hasAllTags(["tag-2", "tag-1"])
-            ->filter("honor")
+            ->hasAllTags(['tag-2', 'tag-1'])
+            ->filter('honor')
             ->get();
         $this->assertCount(0, $products);
 
         $products = Store::products()
-            ->filter("TV")
+            ->filter('TV')
             ->get();
         $this->assertCount(2, $products);
 
         $products = Store::products()
-            ->filter("product")
+            ->filter('product')
             ->get();
         $this->assertCount(5, $products);
-
     }
-
 }

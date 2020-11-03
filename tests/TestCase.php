@@ -13,9 +13,8 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     {
         parent::setUp();
         $this->withFactories(__DIR__.'/../database/factories');
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        $this->loadMigrationsFrom(__DIR__ . '/tests-migrations');
-
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/tests-migrations');
     }
 
     /**
@@ -52,7 +51,8 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param \Illuminate\Foundation\Application $app
+     *
      * @return void
      */
     protected function getEnvironmentSetUp($app)
@@ -65,7 +65,5 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
             'driver'   => 'sqlite',
             'database' => ':memory:',
         ]);
-
-
     }
 }
