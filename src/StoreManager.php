@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Hsy\Store;
-
 
 class StoreManager
 {

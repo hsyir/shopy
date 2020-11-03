@@ -1,21 +1,18 @@
 <?php
 
-
 namespace Hsy\Store;
 
-
 use Hsy\Store\Models\InvoiceItem;
-use Hsy\Store\Models\Product;
 
 class InvoiceItemCreator
 {
-
     /**
      * InvoiceItemCreator constructor.
+     *
      * @param $item
      * @param $invoice
      */
-    public function __construct($item,$invoice)
+    public function __construct($item, $invoice)
     {
         $product = $item->options->product;
         $invoiceItem = new InvoiceItem();

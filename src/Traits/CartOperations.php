@@ -1,14 +1,11 @@
 <?php
 
-
 namespace Hsy\Store\Traits;
-
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 /**
- * Trait CartOperations
- * @package Hsy\Store\Traits
+ * Trait CartOperations.
  */
 trait CartOperations
 {
@@ -46,9 +43,6 @@ trait CartOperations
         Cart::update($rowId, $data);
     }
 
-    /**
-     *
-     */
     public function destroyCart()
     {
         Cart::destroy();
@@ -59,6 +53,6 @@ trait CartOperations
      */
     public function priceTotal()
     {
-        return (int)Cart::priceTotal(0, "", "");
+        return (int) Cart::priceTotal(0, '', '');
     }
 }

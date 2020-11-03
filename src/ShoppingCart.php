@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Hsy\Store;
 
 use Hsy\Store\Facades\Store;
@@ -9,8 +8,7 @@ use Hsy\Store\Traits\CartOperations;
 use Ramsey\Uuid\Uuid;
 
 /**
- * Class ShoppingCart
- * @package Hsy\Store
+ * Class ShoppingCart.
  */
 class ShoppingCart
 {
@@ -18,12 +16,12 @@ class ShoppingCart
 
     /**
      * @param array $extraData
-     * @param null $customerId
+     * @param null  $customerId
+     *
      * @return Invoice
      */
     public function toInvoice($extraData = [], $customerId = null)
     {
-
         $priceTotal = $this->priceTotal();
         $invoice = $this->createInvoice($priceTotal, $customerId, $extraData);
 
@@ -34,19 +32,17 @@ class ShoppingCart
         }
 
         $this->destroyCart();
+
         return $invoice;
     }
 
-    /**
-     *
-     */
     public function attachProducts()
     {
-        $productsIds = $this->content()->pluck("id");
-        $products = Store::products()->query()->whereIn("id", $productsIds)->get()->keyBy("id");
+        $productsIds = $this->content()->pluck('id');
+        $products = Store::products()->query()->whereIn('id', $productsIds)->get()->keyBy('id');
 
         $this->content()->map(function ($item) use ($products) {
-            $this->update($item->rowId, ["options" => ["product" => $products[$item->id]]]);
+            $this->update($item->rowId, ['options' => ['product' => $products[$item->id]]]);
         });
     }
 
@@ -54,6 +50,7 @@ class ShoppingCart
      * @param int $priceTotal
      * @param $customerId
      * @param array $extraData
+     *
      * @return Invoice
      */
     private function createInvoice(int $priceTotal, $customerId, array $extraData): Invoice
@@ -67,6 +64,7 @@ class ShoppingCart
         $invoice->extra_data = $extraData;
         $invoice->unique_code = Uuid::uuid4();
         $invoice->save();
+
         return $invoice;
     }
 }
