@@ -11,7 +11,6 @@ use Illuminate\Support\Collection;
 class Products
 {
     private $query;
-
     private array $with = [];
     private array $withCount = [];
 
@@ -23,7 +22,8 @@ class Products
     public function reset(){
         $this->with = [];
         $this->withCount= [];
-        $this->query = Product::query();
+        $productModel = config("store.products.model");
+        $this->query = $productModel::query();
         return $this;
     }
 
@@ -63,10 +63,7 @@ class Products
 
 
     /**
-     * @param null $term
-     * @param null $category_id
-     * @param null $tags
-     * @return Product
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(): \Illuminate\Database\Eloquent\Builder
     {
@@ -170,8 +167,8 @@ class Products
     public function filter($term)
     {
         $this->query = $this->query->where(function ($q) use ($term) {
-            return $q->where("title", "LIKE", "%{$term}%")
-                ->orWhere("body", "LIKE", "%{$term}%");
+            return $q->where("name", "LIKE", "%{$term}%")
+                ->orWhere("description", "LIKE", "%{$term}%");
         });
         return $this;
     }

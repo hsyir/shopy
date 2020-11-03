@@ -31,7 +31,8 @@ class productRepositoryTest extends TestCase
         });
     }
 
-    public function testCreateProduct()
+    /** @test */
+    public function create_product()
     {
         $this->withoutExceptionHandling();
 
@@ -39,8 +40,8 @@ class productRepositoryTest extends TestCase
         $file = UploadedFile::fake()->image("image")->size(100);
 
         $data = [
-            "title" => "new Product",
-            "body" => "test body",
+            "name" => "new Product",
+            "description" => "test description",
             "category_id" => 1,
             "price" => 100000,
             "tags" => $tags,
@@ -65,22 +66,23 @@ class productRepositoryTest extends TestCase
         $this->assertCount(1, $product->getMedia("cover_image"));
     }
 
-    public function testUpdateProduct()
+    /** @test */
+    public function update_product()
     {
         $product = factory(Product::class)->create();
 
         $newTitle = "New Title ...";
-        Store::products()->store(["title" => $newTitle], $product);
+        Store::products()->store(["name" => $newTitle], $product);
 
-        $this->assertEquals(Product::all()->first()->title, $newTitle);
+        $this->assertEquals(Product::all()->first()->name, $newTitle);
     }
-
-    public function testFilter()
+    /** @test */
+    public function filter()
     {
         $data = [
             [
-                "title" => "Product-1",
-                "body" => "there is some description about my product as Samsung TV",
+                "name" => "Product-1",
+                "description" => "there is some description about my product as Samsung TV",
                 "category_id" => 1,
                 "price" => 100000,
                 "tags" => ["tag-1", "tag-2", "tag-3"],
@@ -91,8 +93,8 @@ class productRepositoryTest extends TestCase
                 ],
             ],
             [
-                "title" => "Product-2",
-                "body" => "there is some description about my product as Apple Mobile Phone",
+                "name" => "Product-2",
+                "description" => "there is some description about my product as Apple Mobile Phone",
                 "category_id" => 2,
                 "price" => 200000,
                 "tags" => ["tag-2", "tag-3", "tag-4"],
@@ -103,8 +105,8 @@ class productRepositoryTest extends TestCase
                 ],
             ],
             [
-                "title" => "Product-3",
-                "body" => "there is some description about my product as Nokia Mobile Phone",
+                "name" => "Product-3",
+                "description" => "there is some description about my product as Nokia Mobile Phone",
                 "category_id" => 2,
                 "price" => 300000,
                 "tags" => ["tag-5", "tag-6", "tag-7"],
@@ -115,8 +117,8 @@ class productRepositoryTest extends TestCase
                 ],
             ],
             [
-                "title" => "Product-4",
-                "body" => "there is some description about my product as Honor Mobile Phone",
+                "name" => "Product-4",
+                "description" => "there is some description about my product as Honor Mobile Phone",
                 "category_id" => 2,
                 "price" => 500000,
                 "tags" => ["tag-8", "tag-9", "tag-10"],
@@ -127,8 +129,8 @@ class productRepositoryTest extends TestCase
                 ],
             ],
             [
-                "title" => "Product-5",
-                "body" => "there is some description about my product as Sony TV",
+                "name" => "Product-5",
+                "description" => "there is some description about my product as Sony TV",
                 "category_id" => 2,
                 "price" => 600000,
                 "tags" => ["tag-1", "tag-2", "tag-11"],

@@ -15,9 +15,10 @@
         "laravel/laravel": "^8.0.0",
         "spatie/laravel-medialibrary": "^8.0.0",
         "spatie/laravel-translatable": "4.5.*",
-        "spatie/laravel-sluggable": "9999999-dev",
         "spatie/laravel-tags": "9999999-dev",
-        "bumbummen99/shoppingcart": "9999999-dev"
+        "bumbummen99/shoppingcart": "9999999-dev",
+        "cviebrock/eloquent-sluggable": "9999999-dev",
+        "ramsey/uuid": "4.0"
     },
     "extra": {
         "laravel": {

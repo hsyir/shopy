@@ -27,9 +27,8 @@ class HsyStoreServiceProvider extends ServiceProvider
     protected function registerFacades()
     {
         $this->app->singleton('Store', function ($app) {
-            return new Store;
+            return new StoreManager();
         });
-
 
         $this->mergeConfigFrom(__DIR__ . '/../config/store.php', 'store');
     }
