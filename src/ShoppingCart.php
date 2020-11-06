@@ -3,7 +3,7 @@
 namespace Hsy\Store;
 
 use Hsy\Store\Facades\Store;
-use Hsy\Store\Models\Invoice;
+use Hsy\Store\Models\Order;
 use Hsy\Store\Traits\CartOperations;
 use Ramsey\Uuid\Uuid;
 
@@ -18,22 +18,22 @@ class ShoppingCart
      * @param array $extraData
      * @param null  $customerId
      *
-     * @return Invoice
+     * @return Order
      */
-    public function toInvoice($extraData = [], $customerId = null)
+    public function toOrder($extraData = [], $customerId = null)
     {
         $priceTotal = $this->priceTotal();
-        $invoice = $this->createInvoice($priceTotal, $customerId, $extraData);
+        $order = $this->createOrder($priceTotal, $customerId, $extraData);
 
         $this->attachProducts();
         $cartItems = $this->content();
         foreach ($cartItems as $cartItem) {
-            new InvoiceItemCreator($cartItem, $invoice);
+            new OrderItemCreator($cartItem, $order);
         }
 
         $this->destroyCart();
 
-        return $invoice;
+        return $order;
     }
 
     public function attachProducts()
@@ -51,20 +51,20 @@ class ShoppingCart
      * @param $customerId
      * @param array $extraData
      *
-     * @return Invoice
+     * @return Order
      */
-    private function createInvoice(int $priceTotal, $customerId, array $extraData): Invoice
+    private function createOrder(int $priceTotal, $customerId, array $extraData): Order
     {
-        $invoice = new Invoice();
-        $invoice->total_amount = $priceTotal;
-        $invoice->customer_id = $customerId;
-        $invoice->tax_amount = 0;
-        $invoice->discount_amount = 0;
-        $invoice->payable_amount = $priceTotal;
-        $invoice->extra_data = $extraData;
-        $invoice->unique_code = Uuid::uuid4();
-        $invoice->save();
+        $order = new Order();
+        $order->total_amount = $priceTotal;
+        $order->customer_id = $customerId;
+        $order->tax_amount = 0;
+        $order->discount_amount = 0;
+        $order->payable_amount = $priceTotal;
+        $order->extra_data = $extraData;
+        $order->unique_code = Uuid::uuid4();
+        $order->save();
 
-        return $invoice;
+        return $order;
     }
 }

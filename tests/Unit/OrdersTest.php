@@ -3,12 +3,12 @@
 namespace Hsy\Store\Tests;
 
 use Hsy\Store\Facades\Store;
-use Hsy\Store\Models\Invoice;
-use Hsy\Store\Models\InvoiceItem;
+use Hsy\Store\Models\Order;
+use Hsy\Store\Models\OrderItem;
 use Hsy\Store\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class InvoicesTest extends TestCase
+class OrdersTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -18,7 +18,7 @@ class InvoicesTest extends TestCase
     }
 
     /** @test */
-    public function cart_to_invoice()
+    public function cart_to_order()
     {
         $productsCount = 20;
         $products = factory(Product::class, $productsCount)->create();
@@ -26,11 +26,11 @@ class InvoicesTest extends TestCase
             Store::cart()->add($product, 10);
         }
 
-        $invoiceFromCart = Store::cart()->toInvoice();
-        $invoice = Invoice::first();
+        $invoiceFromCart = Store::cart()->toOrder();
+        $order = Order::first();
 
-        $this->assertEquals($invoice->attributes, $invoiceFromCart->attributes);
-        $this->assertCount($productsCount, InvoiceItem::all());
+        $this->assertEquals($order->attributes, $invoiceFromCart->attributes);
+        $this->assertCount($productsCount, OrderItem::all());
     }
 
     /** @test */
@@ -45,7 +45,7 @@ class InvoicesTest extends TestCase
             'customer_email'   => $faker->email,
             'customer_address' => $faker->address,
         ];
-        $invoiceFromCart = Store::cart()->toInvoice($extraData);
-        $this->assertEquals($extraData, Invoice::first()->extra_data);
+        $invoiceFromCart = Store::cart()->toOrder($extraData);
+        $this->assertEquals($extraData, Order::first()->extra_data);
     }
 }

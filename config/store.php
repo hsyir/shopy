@@ -4,7 +4,7 @@ return [
     'products'=> [
         'model'=> \Hsy\Store\Models\Product::class,
     ],
-    'invoices'=> [
-        'model'=> \Hsy\Store\Models\Invoice::class,
+    'orders'=> [
+        'model'=> \Hsy\Store\Models\Order::class,
     ],
 ];

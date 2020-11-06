@@ -2,9 +2,9 @@
 
 namespace Hsy\Store;
 
-use Hsy\Store\Models\Invoice;
+use Hsy\Store\Models\Order;
 
-class Invoices
+class Orders
 {
     private $query;
 
@@ -20,7 +20,7 @@ class Invoices
     {
         $this->with = [];
         $this->withCount = [];
-        $productModel = config('store.invoices.model');
+        $productModel = config('store.orders.model');
         $this->query = $productModel::query();
 
         return $this;
@@ -92,6 +92,6 @@ class Invoices
 
     public function getByUniqueCode($uniqueCode)
     {
-        return Invoice::whereUniqueCode($uniqueCode)->first();
+        return Order::whereUniqueCode($uniqueCode)->first();
     }
 }

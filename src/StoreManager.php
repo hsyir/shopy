@@ -12,7 +12,7 @@ class StoreManager
     {
         $this->products = new Products();
         $this->cart = new ShoppingCart();
-        $this->invoices = new invoices();
+        $this->orders = new Orders();
     }
 
     public function products()
@@ -25,8 +25,8 @@ class StoreManager
         return $this->cart;
     }
 
-    public function invoices()
+    public function orders()
     {
-        return $this->invoices;
+        return $this->orders;
     }
 }
