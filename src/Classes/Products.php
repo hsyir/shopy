@@ -1,6 +1,6 @@
 <?php
 
-namespace Hsy\Store;
+namespace Hsy\Store\Classes;
 
 use Hsy\Store\Models\Product;
 use Hsy\Store\Traits\QueriesTrait;

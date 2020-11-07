@@ -1,6 +1,6 @@
 <?php
 
-namespace Hsy\Store;
+namespace Hsy\Store\Classes;
 
 use Hsy\Store\Facades\Store;
 use Hsy\Store\Models\Order;
