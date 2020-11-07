@@ -5,6 +5,7 @@ return [
         'model'=> \Hsy\Shopy\Models\Product::class,
     ],
     'orders'=> [
-        'model'=> \Hsy\Shopy\Models\Order::class,
+        'orders_model'=> \Hsy\Shopy\Models\Order::class,
+        'order_items_model'=> \Hsy\Shopy\Models\OrderItem::class,
     ],
 ];

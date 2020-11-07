@@ -23,13 +23,11 @@ class ProductsTest extends TestCase
         $this->app['router']->prefix('products')->group(function ($router) {
             $router->post('/', function (Request $request) {
                 $product = Shopy::products()->store($request->all());
-
                 return response()->json(['product_id' => $product->id]);
             });
 
-            $router->post('/{product}/changeCoverImage', function (Request $request,Product $product) {
-               Shopy::products()->changeCoverImageFromRequest($product);
-
+            $router->post('/{product}/changeCoverImage', function (Request $request, Product $product) {
+                Shopy::products()->changeCoverImageFromRequest($product);
                 return response()->json(['product_id' => $product->id]);
             });
         });
@@ -57,20 +55,19 @@ class ProductsTest extends TestCase
             ],
         ];
 
-        $product_id =
-            $this->post('/products', $data)
-                ->json('product_id');
+
+        $this->post('/products', $data)
+            ->json('product_id');
 
         /**
          * @var Product $product
          */
-        $product = Product::find($product_id);
+        $product = Product::first();
         $this->assertDatabaseCount('products', 1);
         $this->assertEquals($product->getTags(), $tags);
         $this->assertCount(1, $product->getMedia('cover_image'));
     }
 
-    /** @test */
     public function change_cover_photo_from_request()
     {
         $this->withoutExceptionHandling();
@@ -84,11 +81,10 @@ class ProductsTest extends TestCase
 
         $this->post('/products/' . $product->id . '/changeCoverImage', $data);
 
-
         /**
          * @var Product $product
          */
-        $product=Product::first();
+        $product = Product::first();
         $this->assertCount(1, $product->getMedia('cover_image'));
     }
 

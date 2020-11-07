@@ -18,15 +18,15 @@ class Orders
     {
         $this->with = [];
         $this->withCount = [];
-        $productModel = config('shopy.orders.model');
-        $this->query = $productModel::query();
+        $orderModel = config('shopy.orders.orders_model');
+        $this->query = $orderModel::query();
 
         return $this;
     }
-
 
     public function getByUniqueCode($uniqueCode)
     {
         return Order::whereUniqueCode($uniqueCode)->first();
     }
+
 }

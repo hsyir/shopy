@@ -55,7 +55,8 @@ class ShoppingCart
      */
     private function createOrder(int $priceTotal, $customerId, array $extraData): Order
     {
-        $order = new Order();
+        $orderModel = config('shopy.orders.orders_model');
+        $order = new $orderModel();
         $order->total_amount = $priceTotal;
         $order->customer_id = $customerId;
         $order->tax_amount = 0;
