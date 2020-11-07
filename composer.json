@@ -1,47 +1,60 @@
 {
-    "name": "hsyir/store",
-    "description": "",
-    "authors": [
-        {
-            "name": "Hossein",
-            "email": "hosseinyaghmaee@gmail.com"
-        }
-    ],
-    "license": "MIT",
-    "minimum-stability": "dev",
-    "require": {
-        "php": ">=7.4",
-        "illuminate/support": "^8.0.0",
-        "laravel/laravel": "^8.0.0",
-        "spatie/laravel-medialibrary": "^8.0.0",
-        "spatie/laravel-translatable": "4.5.*",
-        "spatie/laravel-tags": "9999999-dev",
-        "bumbummen99/shoppingcart": "9999999-dev",
-        "cviebrock/eloquent-sluggable": "9999999-dev",
-        "ramsey/uuid": "4.0"
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Hsy\\Store\\HsyStoreServiceProvider"
-            ],
-            "aliases": {
-                "Contents": "Hsy\\Store\\Facades\\Store"
-            }
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "Hsy\\Store\\": "src/"
-        }
-    },
-    "require-dev": {
-        "orchestra/testbench": "9999999-dev",
-        "laravel/legacy-factories": "^1.0.4"
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Hsy\\Store\\Tests\\": "tests"
-        }
+  "name": "hsyir/store",
+  "description": "",
+  "authors": [
+    {
+      "name": "Hossein",
+      "email": "hosseinyaghmaee@gmail.com"
     }
+  ],
+  "keywords": [
+    "online-shop",
+    "hsy.ir",
+    "hsyir",
+    "online store",
+    "laravel online store",
+    "hosseinyaghmaee"
+  ],
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=7.4",
+    "illuminate/support": "^8.0.0",
+    "laravel/laravel": "^8.0.0",
+    "spatie/laravel-medialibrary": "^8.0.0",
+    "spatie/laravel-translatable": "4.5.*",
+    "spatie/laravel-tags": "9999999-dev",
+    "bumbummen99/shoppingcart": "9999999-dev",
+    "cviebrock/eloquent-sluggable": "9999999-dev",
+    "ramsey/uuid": "4.0"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Hsy\\Store\\HsyStoreServiceProvider"
+      ],
+      "aliases": {
+        "Contents": "Hsy\\Store\\Facades\\Store"
+      }
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Hsy\\Store\\": "src/"
+    }
+  },
+  "scripts": {
+    "test": "php vendor/phpunit/phpunit/phpunit",
+    "test-debug": "php vendor/phpunit/phpunit/phpunit --debug",
+    "test-coverage": "php vendor/phpunit/phpunit/phpunit"
+  },
+  "require-dev": {
+    "orchestra/testbench": "9999999-dev",
+    "laravel/legacy-factories": "^1.0.4"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Hsy\\Store\\Tests\\": "tests"
+    }
+  }
 }
