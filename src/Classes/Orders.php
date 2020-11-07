@@ -1,9 +1,9 @@
 <?php
 
-namespace Hsy\Store\Classes;
+namespace Hsy\Shopy\Classes;
 
-use Hsy\Store\Models\Order;
-use Hsy\Store\Traits\QueriesTrait;
+use Hsy\Shopy\Models\Order;
+use Hsy\Shopy\Traits\QueriesTrait;
 
 class Orders
 {
@@ -18,7 +18,7 @@ class Orders
     {
         $this->with = [];
         $this->withCount = [];
-        $productModel = config('store.orders.model');
+        $productModel = config('shopy.orders.model');
         $this->query = $productModel::query();
 
         return $this;

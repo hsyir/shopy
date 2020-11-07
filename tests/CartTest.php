@@ -1,9 +1,9 @@
 <?php
 
-namespace Hsy\Store\Tests;
+namespace Hsy\Shopy\Tests;
 
-use Hsy\Store\Facades\Store;
-use Hsy\Store\Models\Product;
+use Hsy\Shopy\Facades\Shopy;
+use Hsy\Shopy\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CartTest extends TestCase
@@ -19,8 +19,8 @@ class CartTest extends TestCase
     public function add_to_cart()
     {
         $product = factory(Product::class)->create();
-        Store::cart()->add($product, 100);
-        $this->assertCount(1, Store::cart()->content());
+        Shopy::cart()->add($product, 100);
+        $this->assertCount(1, Shopy::cart()->content());
     }
 
     /** @test  */
@@ -28,7 +28,7 @@ class CartTest extends TestCase
     {
         $product = factory(Product::class)->create();
         $product->addToCart();
-        $this->assertCount(1, Store::cart()->content());
+        $this->assertCount(1, Shopy::cart()->content());
     }
 
     /** @test  */
@@ -36,14 +36,14 @@ class CartTest extends TestCase
     {
         $products = factory(Product::class, 20)->create();
         foreach ($products as $product) {
-            Store::cart()->add($product, 10);
+            Shopy::cart()->add($product, 10);
         }
 
         $this->assertEquals(
             $products->map(function ($item) {
                 return $item->price * 10;
             })->sum(),
-            Store::cart()->priceTotal()
+            Shopy::cart()->priceTotal()
         );
     }
 
@@ -52,10 +52,10 @@ class CartTest extends TestCase
     {
         $products = factory(Product::class, 20)->create();
         foreach ($products as $product) {
-            Store::cart()->add($product, 10);
+            Shopy::cart()->add($product, 10);
         }
 
-        $this->assertEquals(Store::cart()->count(), 200);
+        $this->assertEquals(Shopy::cart()->count(), 200);
     }
 
     /** @test  */
@@ -64,11 +64,11 @@ class CartTest extends TestCase
         $product = factory(Product::class)->create();
         $product->addToCart();
 
-        Store::cart()->attachProducts();
+        Shopy::cart()->attachProducts();
 
         $this->assertEquals(
             $product->id,
-            Store::cart()->content()->first()->options->product->id
+            Shopy::cart()->content()->first()->options->product->id
         );
     }
 }

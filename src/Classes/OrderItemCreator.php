@@ -1,8 +1,8 @@
 <?php
 
-namespace Hsy\Store\Classes;
+namespace Hsy\Shopy\Classes;
 
-use Hsy\Store\Models\OrderItem;
+use Hsy\Shopy\Models\OrderItem;
 
 class OrderItemCreator
 {

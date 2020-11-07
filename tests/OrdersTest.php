@@ -1,11 +1,11 @@
 <?php
 
-namespace Hsy\Store\Tests;
+namespace Hsy\Shopy\Tests;
 
-use Hsy\Store\Facades\Store;
-use Hsy\Store\Models\Order;
-use Hsy\Store\Models\OrderItem;
-use Hsy\Store\Models\Product;
+use Hsy\Shopy\Facades\Shopy;
+use Hsy\Shopy\Models\Order;
+use Hsy\Shopy\Models\OrderItem;
+use Hsy\Shopy\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class OrdersTest extends TestCase
@@ -23,10 +23,10 @@ class OrdersTest extends TestCase
         $productsCount = 20;
         $products = factory(Product::class, $productsCount)->create();
         foreach ($products as $product) {
-            Store::cart()->add($product, 10);
+            Shopy::cart()->add($product, 10);
         }
 
-        $invoiceFromCart = Store::cart()->toOrder();
+        $invoiceFromCart = Shopy::cart()->toOrder();
         $order = Order::first();
 
         $this->assertEquals($order->attributes, $invoiceFromCart->attributes);
@@ -45,7 +45,7 @@ class OrdersTest extends TestCase
             'customer_email'   => $faker->email,
             'customer_address' => $faker->address,
         ];
-        $invoiceFromCart = Store::cart()->toOrder($extraData);
+        $invoiceFromCart = Shopy::cart()->toOrder($extraData);
         $this->assertEquals($extraData, Order::first()->extra_data);
     }
 }

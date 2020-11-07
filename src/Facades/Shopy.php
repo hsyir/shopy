@@ -1,13 +1,13 @@
 <?php
 
-namespace Hsy\Store\Facades;
+namespace Hsy\Shopy\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Store extends Facade
+class Shopy extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'Store';
+        return 'Shopy';
     }
 }

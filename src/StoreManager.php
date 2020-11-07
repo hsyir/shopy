@@ -1,10 +1,10 @@
 <?php
 
-namespace Hsy\Store;
+namespace Hsy\Shopy;
 
-use Hsy\Store\Classes\Orders;
-use Hsy\Store\Classes\Products;
-use Hsy\Store\Classes\ShoppingCart;
+use Hsy\Shopy\Classes\Orders;
+use Hsy\Shopy\Classes\Products;
+use Hsy\Shopy\Classes\ShoppingCart;
 
 class StoreManager
 {

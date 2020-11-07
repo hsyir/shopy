@@ -1,6 +1,6 @@
 <?php
 
-namespace Hsy\Store\Traits;
+namespace Hsy\Shopy\Traits;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 
