@@ -1,5 +1,5 @@
 {
-  "name": "hsyir/store",
+  "name": "hsyir/shopy",
   "description": "",
   "authors": [
     {
@@ -31,16 +31,16 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Hsy\\Store\\HsyStoreServiceProvider"
+        "Hsy\\Shopy\\HsyStoreServiceProvider"
       ],
       "aliases": {
-        "Contents": "Hsy\\Store\\Facades\\Store"
+        "Contents": "Hsy\\Shopy\\Facades\\Shopy"
       }
     }
   },
   "autoload": {
     "psr-4": {
-      "Hsy\\Store\\": "src/"
+      "Hsy\\Shopy\\": "src/"
     }
   },
   "scripts": {
@@ -54,7 +54,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Hsy\\Store\\Tests\\": "tests"
+      "Hsy\\Shopy\\Tests\\": "tests"
     }
   }
 }

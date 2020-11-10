@@ -1,6 +1,6 @@
 <?php
 
-namespace Hsy\Store\Models;
+namespace Hsy\Shopy\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

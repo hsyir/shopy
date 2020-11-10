@@ -1,10 +1,10 @@
 <?php
 
-namespace Hsy\Store\Models;
+namespace Hsy\Shopy\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
-use Hsy\Store\Facades\Store;
+use Hsy\Shopy\Facades\Shopy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -55,7 +55,7 @@ class Product extends Model implements HasMedia, Buyable
 
     public function addToCart($quantity = 1)
     {
-        Store::cart()->add($this, $quantity);
+        Shopy::cart()->add($this, $quantity);
     }
 
     /**
@@ -70,5 +70,11 @@ class Product extends Model implements HasMedia, Buyable
                 'source' => 'name',
             ],
         ];
+    }
+
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection("cover_image")->singleFile();
     }
 }

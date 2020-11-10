@@ -1,6 +1,6 @@
 <?php
 
-use Hsy\Store\Models\Product;
+use Hsy\Shopy\Models\Product;
 
 $factory->define(Product::class, function (Faker\Generator $faker) {
     return [

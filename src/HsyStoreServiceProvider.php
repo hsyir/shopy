@@ -1,6 +1,6 @@
 <?php
 
-namespace Hsy\Store;
+namespace Hsy\Shopy;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -22,10 +22,10 @@ class HsyStoreServiceProvider extends ServiceProvider
      */
     protected function registerFacades()
     {
-        $this->app->singleton('Store', function ($app) {
+        $this->app->singleton('Shopy', function ($app) {
             return new StoreManager();
         });
 
-        $this->mergeConfigFrom(__DIR__.'/../config/store.php', 'store');
+        $this->mergeConfigFrom(__DIR__.'/../config/shopy.php', 'shopy');
     }
 }

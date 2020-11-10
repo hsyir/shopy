@@ -1,10 +1,10 @@
 <?php
 
-namespace Hsy\Store\Tests;
+namespace Hsy\Shopy\Tests;
 
 use Cviebrock\EloquentSluggable\ServiceProvider;
 use Gloudemans\Shoppingcart\ShoppingcartServiceProvider;
-use Hsy\Store\HsyStoreServiceProvider;
+use Hsy\Shopy\HsyStoreServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
@@ -34,19 +34,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
         ];
     }
 
-    /**
-     * Bootstrap any aliases here.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     *
-     * @return array
-     */
-    protected function getPackageAliases($app)
-    {
-        return [
-            'Press' => 'Hsy\\Store\\Facades\\Store',
-        ];
-    }
+
 
     /**
      * Define environment setup.

@@ -1,12 +1,16 @@
 <?php
 
-namespace Hsy\Store;
+namespace Hsy\Shopy;
+
+use Hsy\Shopy\Classes\Orders;
+use Hsy\Shopy\Classes\Products;
+use Hsy\Shopy\Classes\ShoppingCart;
 
 class StoreManager
 {
     private Products $products;
     private ShoppingCart $cart;
-    private Invoices $invoices;
+    private Orders $orders;
 
     public function __construct()
     {

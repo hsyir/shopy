@@ -1,10 +1,10 @@
 <?php
 
-namespace Hsy\Store;
+namespace Hsy\Shopy\Classes;
 
-use Hsy\Store\Facades\Store;
-use Hsy\Store\Models\Order;
-use Hsy\Store\Traits\CartOperations;
+use Hsy\Shopy\Facades\Shopy;
+use Hsy\Shopy\Models\Order;
+use Hsy\Shopy\Traits\CartOperations;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -39,7 +39,7 @@ class ShoppingCart
     public function attachProducts()
     {
         $productsIds = $this->content()->pluck('id');
-        $products = Store::products()->query()->whereIn('id', $productsIds)->get()->keyBy('id');
+        $products = Shopy::products()->query()->whereIn('id', $productsIds)->get()->keyBy('id');
 
         $this->content()->map(function ($item) use ($products) {
             $this->update($item->rowId, ['options' => ['product' => $products[$item->id]]]);
@@ -55,7 +55,8 @@ class ShoppingCart
      */
     private function createOrder(int $priceTotal, $customerId, array $extraData): Order
     {
-        $order = new Order();
+        $orderModel = config('shopy.orders.orders_model');
+        $order = new $orderModel();
         $order->total_amount = $priceTotal;
         $order->customer_id = $customerId;
         $order->tax_amount = 0;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Hsy\Store;
+namespace Hsy\Shopy\Classes;
 
-use Hsy\Store\Models\Order;
-use Hsy\Store\Traits\QueriesTrait;
+use Hsy\Shopy\Models\Order;
+use Hsy\Shopy\Traits\QueriesTrait;
 
 class Orders
 {
@@ -18,15 +18,15 @@ class Orders
     {
         $this->with = [];
         $this->withCount = [];
-        $productModel = config('store.orders.model');
-        $this->query = $productModel::query();
+        $orderModel = config('shopy.orders.orders_model');
+        $this->query = $orderModel::query();
 
         return $this;
     }
-
 
     public function getByUniqueCode($uniqueCode)
     {
         return Order::whereUniqueCode($uniqueCode)->first();
     }
+
 }

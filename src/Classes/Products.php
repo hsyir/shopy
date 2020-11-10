@@ -1,9 +1,9 @@
 <?php
 
-namespace Hsy\Store;
+namespace Hsy\Shopy\Classes;
 
-use Hsy\Store\Models\Product;
-use Hsy\Store\Traits\QueriesTrait;
+use Hsy\Shopy\Models\Product;
+use Hsy\Shopy\Traits\QueriesTrait;
 
 class Products
 {
@@ -18,7 +18,7 @@ class Products
     {
         $this->with = [];
         $this->withCount = [];
-        $productModel = config('store.products.model');
+        $productModel = config('shopy.products.model');
         $this->query = $productModel::query();
 
         return $this;
@@ -32,7 +32,7 @@ class Products
      */
     public function store($data, $product = null)
     {
-        $productModel = config('store.products.model');
+        $productModel = config('shopy.products.model');
         $product = ($product instanceof $productModel) ? $product : new $productModel();
 
         $product->fill($data);
@@ -56,7 +56,7 @@ class Products
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
-    public function addMediaFromRequest($product, $requestKey = 'cover_image', $collection = 'cover_image')
+    public function changeCoverImageFromRequest($product, $requestKey = 'cover_image', $collection = 'cover_image')
     {
         $product->addMediaFromRequest($requestKey)->toMediaCollection($collection);
     }
@@ -65,21 +65,18 @@ class Products
     public function priceGreaterThan($price)
     {
         $this->query = $this->query->where('price', '>=', $price);
-
         return $this;
     }
 
     public function priceLessThan($price)
     {
         $this->query = $this->query->where('price', '<=', $price);
-
         return $this;
     }
 
     public function priceEqual($price)
     {
         $this->query = $this->query->where('price', '=', $price);
-
         return $this;
     }
 
@@ -90,7 +87,6 @@ class Products
             return $q->where('name', 'LIKE', "%{$term}%")
                 ->orWhere('description', 'LIKE', "%{$term}%");
         });
-
         return $this;
     }
 }

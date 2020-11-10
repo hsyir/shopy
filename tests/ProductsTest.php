@@ -1,14 +1,14 @@
 <?php
 
-namespace Hsy\Store\Tests;
+namespace Hsy\Shopy\Tests;
 
-use Hsy\Store\Facades\Store;
-use Hsy\Store\Models\Product;
+use Hsy\Shopy\Facades\Shopy;
+use Hsy\Shopy\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
-class productRepositoryTest extends TestCase
+class ProductsTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -22,8 +22,12 @@ class productRepositoryTest extends TestCase
     {
         $this->app['router']->prefix('products')->group(function ($router) {
             $router->post('/', function (Request $request) {
-                $product = Store::products()->store($request->all());
+                $product = Shopy::products()->store($request->all());
+                return response()->json(['product_id' => $product->id]);
+            });
 
+            $router->post('/{product}/changeCoverImage', function (Request $request, Product $product) {
+                Shopy::products()->changeCoverImageFromRequest($product);
                 return response()->json(['product_id' => $product->id]);
             });
         });
@@ -38,29 +42,49 @@ class productRepositoryTest extends TestCase
         $file = UploadedFile::fake()->image('image')->size(100);
 
         $data = [
-            'name'        => 'new Product',
+            'name' => 'new Product',
             'description' => 'test description',
             'category_id' => 1,
-            'price'       => 100000,
-            'tags'        => $tags,
+            'price' => 100000,
+            'tags' => $tags,
             'cover_image' => $file,
-            'extra_data'  => [
+            'extra_data' => [
                 'key1' => '65',
                 'key2' => 'Value 1',
                 'key3' => 'Value 2',
             ],
         ];
 
-        $product_id =
-            $this->post('/products', $data)
-                ->json('product_id');
+
+        $this->post('/products', $data)
+            ->json('product_id');
 
         /**
          * @var Product $product
          */
-        $product = Product::find($product_id);
+        $product = Product::first();
         $this->assertDatabaseCount('products', 1);
         $this->assertEquals($product->getTags(), $tags);
+        $this->assertCount(1, $product->getMedia('cover_image'));
+    }
+
+    public function change_cover_photo_from_request()
+    {
+        $this->withoutExceptionHandling();
+
+        $product = factory(Product::class)->create();
+        $file = UploadedFile::fake()->image('image')->size(100);
+
+        $data = [
+            'cover_image' => $file,
+        ];
+
+        $this->post('/products/' . $product->id . '/changeCoverImage', $data);
+
+        /**
+         * @var Product $product
+         */
+        $product = Product::first();
         $this->assertCount(1, $product->getMedia('cover_image'));
     }
 
@@ -70,7 +94,7 @@ class productRepositoryTest extends TestCase
         $product = factory(Product::class)->create();
 
         $newTitle = 'New Title ...';
-        Store::products()->store(['name' => $newTitle], $product);
+        Shopy::products()->store(['name' => $newTitle], $product);
 
         $this->assertEquals(Product::all()->first()->name, $newTitle);
     }
@@ -80,60 +104,60 @@ class productRepositoryTest extends TestCase
     {
         $data = [
             [
-                'name'        => 'Product-1',
+                'name' => 'Product-1',
                 'description' => 'there is some description about my product as Samsung TV',
                 'category_id' => 1,
-                'price'       => 100000,
-                'tags'        => ['tag-1', 'tag-2', 'tag-3'],
-                'extra_data'  => [
+                'price' => 100000,
+                'tags' => ['tag-1', 'tag-2', 'tag-3'],
+                'extra_data' => [
                     'key1' => '65',
                     'key2' => 'Value 1',
                     'key3' => 'Value 2',
                 ],
             ],
             [
-                'name'        => 'Product-2',
+                'name' => 'Product-2',
                 'description' => 'there is some description about my product as Apple Mobile Phone',
                 'category_id' => 2,
-                'price'       => 200000,
-                'tags'        => ['tag-2', 'tag-3', 'tag-4'],
-                'extra_data'  => [
+                'price' => 200000,
+                'tags' => ['tag-2', 'tag-3', 'tag-4'],
+                'extra_data' => [
                     'key1' => '65',
                     'key2' => 'Value 1',
                     'key3' => 'Value 2',
                 ],
             ],
             [
-                'name'        => 'Product-3',
+                'name' => 'Product-3',
                 'description' => 'there is some description about my product as Nokia Mobile Phone',
                 'category_id' => 2,
-                'price'       => 300000,
-                'tags'        => ['tag-5', 'tag-6', 'tag-7'],
-                'extra_data'  => [
+                'price' => 300000,
+                'tags' => ['tag-5', 'tag-6', 'tag-7'],
+                'extra_data' => [
                     'key1' => '65',
                     'key2' => 'Value 1',
                     'key3' => 'Value 2',
                 ],
             ],
             [
-                'name'        => 'Product-4',
+                'name' => 'Product-4',
                 'description' => 'there is some description about my product as Honor Mobile Phone',
                 'category_id' => 2,
-                'price'       => 500000,
-                'tags'        => ['tag-8', 'tag-9', 'tag-10'],
-                'extra_data'  => [
+                'price' => 500000,
+                'tags' => ['tag-8', 'tag-9', 'tag-10'],
+                'extra_data' => [
                     'key1' => '65',
                     'key2' => 'Value 1',
                     'key3' => 'Value 2',
                 ],
             ],
             [
-                'name'        => 'Product-5',
+                'name' => 'Product-5',
                 'description' => 'there is some description about my product as Sony TV',
                 'category_id' => 2,
-                'price'       => 600000,
-                'tags'        => ['tag-1', 'tag-2', 'tag-11'],
-                'extra_data'  => [
+                'price' => 600000,
+                'tags' => ['tag-1', 'tag-2', 'tag-11'],
+                'extra_data' => [
                     'key1' => '65',
                     'key2' => 'Value 1',
                     'key3' => 'Value 2',
@@ -142,59 +166,59 @@ class productRepositoryTest extends TestCase
         ];
 
         foreach ($data as $productData) {
-            Store::products()->store($productData);
+            Shopy::products()->store($productData);
         }
 
-        $products = Store::products()
+        $products = Shopy::products()
             ->filter('samsung')->get();
         $this->assertCount(1, $products);
 
-        $products = Store::products()
+        $products = Shopy::products()
             ->hasAnyTags(['tag-1'])->get();
         $this->assertCount(2, $products);
 
-        $products = Store::products()
+        $products = Shopy::products()
             ->hasAnyTags(['tag-1', 'tag-2'])->get();
         $this->assertCount(3, $products);
 
-        $products = Store::products()
+        $products = Shopy::products()
             ->hasAllTags(['tag-1', 'tag-2'])->get();
         $this->assertCount(2, $products);
 
-        $products = Store::products()
+        $products = Shopy::products()
             ->priceEqual(300000)->get();
         $this->assertCount(1, $products);
 
-        $products = Store::products()
+        $products = Shopy::products()
             ->priceGreaterThan(350000)->get();
         $this->assertCount(2, $products);
 
-        $products = Store::products()
+        $products = Shopy::products()
             ->priceLessThan(300000)
             ->hasAllTags(['tag-2', 'tag-1'])
             ->get();
         $this->assertCount(1, $products);
 
-        $products = Store::products()
+        $products = Shopy::products()
             ->priceLessThan(300000)
             ->hasAllTags(['tag-2', 'tag-1'])
             ->filter('honor')
             ->get();
         $this->assertCount(0, $products);
 
-        $products = Store::products()
+        $products = Shopy::products()
             ->priceLessThan(300000)
             ->hasAllTags(['tag-2', 'tag-1'])
             ->filter('honor')
             ->get();
         $this->assertCount(0, $products);
 
-        $products = Store::products()
+        $products = Shopy::products()
             ->filter('TV')
             ->get();
         $this->assertCount(2, $products);
 
-        $products = Store::products()
+        $products = Shopy::products()
             ->filter('product')
             ->get();
         $this->assertCount(5, $products);

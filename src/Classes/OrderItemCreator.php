@@ -1,8 +1,6 @@
 <?php
 
-namespace Hsy\Store;
-
-use Hsy\Store\Models\OrderItem;
+namespace Hsy\Shopy\Classes;
 
 class OrderItemCreator
 {
@@ -15,7 +13,8 @@ class OrderItemCreator
     public function __construct($item, $order)
     {
         $product = $item->options->product;
-        $orderItem = new OrderItem();
+        $orderItemModel = config('shopy.orders.order_items_model');
+        $orderItem = new $orderItemModel();
         $orderItem->product_id = $item->id;
         $orderItem->product_price = $product->price;
         $orderItem->quantity = $item->qty;

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Hsy\Store\Traits;
+namespace Hsy\Shopy\Traits;
 
 
 trait QueriesTrait
