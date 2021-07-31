@@ -63,7 +63,7 @@ class Product extends Model implements HasMedia, Buyable
      *
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
