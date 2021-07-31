@@ -25,7 +25,8 @@
     "spatie/laravel-tags": "9999999-dev",
     "bumbummen99/shoppingcart": "9999999-dev",
     "cviebrock/eloquent-sluggable": "9999999-dev",
-    "ramsey/uuid": "4.0"
+    "ramsey/uuid": "4.*",
+    "shetabit/payment": "9999999-dev"
   },
   "extra": {
     "laravel": {
