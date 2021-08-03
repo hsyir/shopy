@@ -8,12 +8,22 @@ class HsyStoreServiceProvider extends ServiceProvider
 {
     public function boot()
     {
+
+        $this->publishes([__DIR__ . '/../config/shopy.php' => config_path('shopy.php'),], 'config');
+
+        $this->publishes([
+            __DIR__ . '/../database/' => database_path('migrations')
+        ], 'migrations');
+
         $this->registerFacades();
     }
 
     public function register()
     {
+
     }
+
+
 
     /**
      * Register any bindings to the app.
