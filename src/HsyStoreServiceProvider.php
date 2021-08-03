@@ -12,7 +12,7 @@ class HsyStoreServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/../config/shopy.php' => config_path('shopy.php'),], 'config');
 
         $this->publishes([
-            __DIR__ . '/../database/' => database_path('migrations')
+            __DIR__ . '/../database/migrations' => database_path('migrations')
         ], 'migrations');
 
         $this->registerFacades();
