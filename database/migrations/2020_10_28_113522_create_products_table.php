@@ -17,15 +17,17 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->json('name');
             $table->json('description');
+            $table->json('unit')->nullable();
             $table->string('slug');
+            $table->integer('inventory_count')->default(-1);
             $table->bigInteger('price');
             $table->bigInteger('no_discount_price')->nullable();
-            $table->string('unit')->nullable();
             $table->bigInteger('weight')->nullable();
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('user_id')->nullable();
-            $table->text('extra_data')->nullable();
+            $table->json('extra_data')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
