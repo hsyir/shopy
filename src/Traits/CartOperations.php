@@ -3,6 +3,7 @@
 namespace Hsy\Shopy\Traits;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Hsy\Store\Models\ProductVariety;
 
 /**
  * Trait CartOperations.
@@ -18,6 +19,30 @@ trait CartOperations
         Cart::add($product, $quantity);
     }
 
+    /**
+     * @return mixed
+     */
+    public function sumarize()
+    {
+        $content = Cart::content();
+        $product = config("shopy.products.model");
+        $products = $product::with("media")->whereIn("id", $content->pluck("id"))->get()->keyBy("id");
+        $content = $content->map(function ($item) use ($products) {
+            $newItem = (array)$item;
+            $newItem["unit"] = $products[$item->id]->unit;
+            $newItem["imageUrl"] = $products[$item->id]->getFirstMediaUrl("image");
+            $newItem["productUrl"] = $products[$item->id]->url;
+            $newItem["availableQty"] = $products[$item->id]->available_quantity;
+            return $newItem;
+        });
+
+        return [
+            "items" => $content,
+            "total" => Cart::total(0),
+            "subtotal" => Cart::subtotal(0),
+            "count" => Cart::count(),
+        ];
+    }
     /**
      * @return mixed
      */
@@ -53,6 +78,6 @@ trait CartOperations
      */
     public function priceTotal()
     {
-        return (int) Cart::priceTotal(0, '', '');
+        return (int)Cart::priceTotal(0, '', '');
     }
 }
